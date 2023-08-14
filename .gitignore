@@ -1,5 +1,6 @@
 node_modules
 /build
-
 config.json
-*.own.*.hbs
+
+# custom templates
+src/commands/build/**/*.*.*.hbs

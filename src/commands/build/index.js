@@ -3,12 +3,12 @@ const { execSync } = require('child_process');
 const colors = require('colors');
 
 const { LANGUAGES, DATABASES } = require('../../common/constants');
-const cfg = require('../../../config.json');
 
 // handlers
 const dbHandler = require('./database');
 const serviceHandler = require('./repository');
 const repositoryHandler = require('./service');
+const domainHandler = require('./domain');
 
 function _prepareDatabaseHandler(argv) {
   console.info(`* ${colors.bold.cyan('Database')}: preparing files`);
@@ -26,6 +26,12 @@ function _prepareRepositoryHandler(entity, argv) {
   console.info(`* ${colors.bold.cyan('Repository')}: preparing files`);
   repositoryHandler(entity, argv);
   console.info(`* ${colors.bold.cyan('Repository')}: succesfuly done`);
+}
+
+function _prepareDomainHandler(entity, argv) {
+  console.info(`* ${colors.bold.cyan('Domain')}: preparing files`);
+  domainHandler(entity, argv);
+  console.info(`* ${colors.bold.cyan('Domain')}: succesfuly done`);
 }
 
 module.exports = {
@@ -48,6 +54,8 @@ module.exports = {
   },
   handle: (argv) => {
     try {
+      const cfg = require('../../../config.json');
+
       const { lang, db } = argv;
 
       // destroy previous builds
@@ -62,6 +70,10 @@ module.exports = {
 
         _prepareServiceHandler(entity, argv);
         _prepareRepositoryHandler(entity, argv);
+
+        if (lang === LANGUAGES.typescript) {
+          _prepareDomainHandler(entity, argv);
+        }
       }
 
       console.info(
