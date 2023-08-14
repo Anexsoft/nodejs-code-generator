@@ -1,21 +1,29 @@
+import { Collection, ObjectId, MongoClient } from "mongodb";
+import { {{entity}} } from './domain/{{lowercase entity}}.domain';
+
+export type {{entity}}CreateInput = {};
+export type {{entity}}UpdateInput = {};
+
 export class {{entity}}Repository {
-  constructor(db) {
-    this.collection = db.collection('{{pluralize (lowercase entity)}}');
+  private readonly db: Collection<{{entity}}>;
+
+  constructor(db: MongoClient) {
+    this.collection = db.collection<{{entity}}>('{{pluralize (lowercase entity)}}');
   }
 
-  findAll(take, skip) {
+  findAll(take: number, skip: number): {{entity}}[] {
     return this.collection.find().take(take).skip(skip);
   }
 
-  findbyId(id) {
+  findbyId(id: string): {{entity}} {
     return this.collection.findOne({ id });
   }
 
-  create(entry) {
+  create(entry: {{entity}}CreateInput) {
     return this.collection.insert(entry);
   }
 
-  update(id, entry) {
+  update(id: ObjectId, entry: {{entity}}UpdateInput) {
     return this.collection.update(
       { id },
       {
@@ -24,7 +32,7 @@ export class {{entity}}Repository {
     );
   }
 
-  remove(id) {
+  remove(id: ObjectId) {
     return this.collection.delete({ id });
   }
 }
