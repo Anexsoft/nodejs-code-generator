@@ -2,13 +2,33 @@ const { execSync } = require('child_process');
 
 const colors = require('colors');
 
-const { LANGUAGES, DATABASES } = require('../../common/constants');
+const { LANGUAGES, DATABASES, MODULES } = require('../../common/constants');
 
 // handlers
 const dbHandler = require('./database');
-const serviceHandler = require('./repository');
-const repositoryHandler = require('./service');
+const repositoryHandler = require('./repository');
+const serviceHandler = require('./service');
 const domainHandler = require('./domain');
+
+function _moduleResolver(domain, { name, path, refs, children }, argv) {
+  if (name === MODULES.service) {
+    _prepareServiceHandler(domain, { ...argv, path, refs });
+  }
+
+  if (name === MODULES.repository) {
+    _prepareRepositoryHandler(domain, { ...argv, path, refs });
+  }
+
+  if (name === MODULES.domain) {
+    _prepareDomainHandler(domain, { ...argv, path });
+  }
+
+  if (children) {
+    for (const child of children) {
+      _moduleResolver(domain, child, argv);
+    }
+  }
+}
 
 function _prepareDatabaseHandler(argv) {
   console.info(`* ${colors.bold.cyan('Database')}: preparing files`);
@@ -16,21 +36,21 @@ function _prepareDatabaseHandler(argv) {
   console.info(`* ${colors.bold.cyan('Database')}: succesfuly done`);
 }
 
-function _prepareServiceHandler(entity, argv) {
+function _prepareServiceHandler(domain, argv) {
   console.info(`* ${colors.bold.cyan('Service')}: preparing files`);
-  serviceHandler(entity, argv);
+  serviceHandler(domain, argv);
   console.info(`* ${colors.bold.cyan('Service')}: succesfuly done`);
 }
 
-function _prepareRepositoryHandler(entity, argv) {
+function _prepareRepositoryHandler(domain, argv) {
   console.info(`* ${colors.bold.cyan('Repository')}: preparing files`);
-  repositoryHandler(entity, argv);
+  repositoryHandler(domain, argv);
   console.info(`* ${colors.bold.cyan('Repository')}: succesfuly done`);
 }
 
-function _prepareDomainHandler(entity, argv) {
+function _prepareDomainHandler(domain, argv) {
   console.info(`* ${colors.bold.cyan('Domain')}: preparing files`);
-  domainHandler(entity, argv);
+  domainHandler(domain, argv);
   console.info(`* ${colors.bold.cyan('Domain')}: succesfuly done`);
 }
 
@@ -63,16 +83,13 @@ module.exports = {
 
       console.info(`${colors.bold('Build')}: ` + colors.cyan(`${lang}/${db}`));
 
-      _prepareDatabaseHandler(argv);
-
-      for (const entity of cfg.entities) {
-        console.info(`${colors.bold.yellow(entity)}: preparing module`);
-
-        _prepareServiceHandler(entity, argv);
-        _prepareRepositoryHandler(entity, argv);
-
-        if (lang === LANGUAGES.typescript) {
-          _prepareDomainHandler(entity, argv);
+      for (const currentPath of cfg.paths) {
+        if (currentPath.name === MODULES.shared) {
+          _prepareDatabaseHandler({ ...argv, path: currentPath.path });
+        } else {
+          for (const domain of cfg.domains) {
+            _moduleResolver(domain, currentPath, argv);
+          }
         }
       }
 
