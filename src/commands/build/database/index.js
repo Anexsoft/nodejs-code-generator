@@ -5,9 +5,14 @@ const {
   fileNameResolver,
 } = require('../../../common/template');
 
-module.exports = ({ lang, db, path }) => {
+module.exports = ({ lang, db, ext, path }) => {
   const langExt = lngExtensionFileResolver(lang);
-  const tmpl = templateLoader(require.resolve(`./${db}.${langExt}.hbs`));
+
+  const tmpl = templateLoader(
+    require.resolve(`./${db}.${langExt}.hbs`),
+    null,
+    ext,
+  );
 
   templateWritter(fileNameResolver(path, '', langExt), tmpl);
 };

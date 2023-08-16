@@ -71,17 +71,32 @@ module.exports = {
       type: 'string',
       choices: [DATABASES.mongodb, DATABASES.mssql, DATABASES.mysql],
     });
+
+    yargs.option('ext', {
+      describe:
+        'Choose your extended template file. (Original template will be used if your extension does not exist)',
+      default: null,
+      type: 'string',
+    });
   },
   handle: (argv) => {
     try {
       const cfg = require('../../../config.json');
 
-      const { lang, db } = argv;
+      const { lang, db, ext } = argv;
 
       // destroy previous builds
       execSync('npm run clean');
 
-      console.info(`${colors.bold('Build')}: ` + colors.cyan(`${lang}/${db}`));
+      if (!ext) {
+        console.info(
+          `${colors.bold('Build')}: ` + colors.cyan(`${lang}/${db}`),
+        );
+      } else {
+        console.info(
+          `${colors.bold('Build')}: ` + colors.cyan(`${lang}/${db} --${ext}`),
+        );
+      }
 
       for (const currentPath of cfg.paths) {
         if (currentPath.name === MODULES.shared) {

@@ -30,7 +30,37 @@ Execute the next command to build your new project.
 node index.js build --lang javascript --db mongodb
 ```
 
-For more information aboud the available commands and arguments, just run `node index.js`
+For more information about the available commands and arguments, just run `node index.js`
+
+### Extend your templates (optional)
+
+You can easily create and extend your templates. Go to the extensions path (`src/extensions`) and create a new template files.
+
+```
+src/extensions/database/database.js.[extension_name].hbs
+src/extensions/service/service.js.[extension_name].hbs
+src/extensions/repository/repository.js.[extension_name].hbs
+src/extensions/domain/domain.js.[extension_name].hbs
+```
+
+Eg: to create templates for NestJS
+
+```
+src/extensions/service/service.js.nestjs.hbs
+src/extensions/repository/repository.js.nestjs.hbs
+src/extensions/domain/domain.js.nestjs.hbs
+```
+
+Now, just run building command
+
+```
+node index.js build --lang typescript --db mongodb --ext=nodejs
+```
+
+#### For your informnation
+
+- You are availble to create multiple extensions, just remember to specify the name of your extensions before of `.hbs` and run the command including the name of your extension.
+- If a extension is not found, original template will be used.
 
 ## Usage
 

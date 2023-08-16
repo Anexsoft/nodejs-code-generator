@@ -5,12 +5,17 @@ const {
   fileNameResolver,
 } = require('../../../common/template');
 
-module.exports = (domain, { lang, path, refs }) => {
+module.exports = (domain, { lang, ext, path, refs }) => {
   const langExt = lngExtensionFileResolver(lang);
-  const tmpl = templateLoader(require.resolve(`./repository.${langExt}.hbs`), {
-    domain,
-    refs,
-  });
+
+  const tmpl = templateLoader(
+    require.resolve(`./repository.${langExt}.hbs`),
+    {
+      domain,
+      refs,
+    },
+    ext,
+  );
 
   templateWritter(fileNameResolver(path, domain, langExt), tmpl);
 };
