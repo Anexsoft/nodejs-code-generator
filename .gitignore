@@ -3,4 +3,4 @@ node_modules
 config.json
 
 # custom templates
-src/extensions/**/*.hbs
+src/templates/**/*.*.*.hbs

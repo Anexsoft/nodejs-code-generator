@@ -1,3 +1,4 @@
+const path = require('path');
 const fs = require('fs');
 const getDirName = require('path').dirname;
 
@@ -8,18 +9,14 @@ const fileNameResolver = (path, name, extension) => {
 };
 
 const templateLoader = (file, args, ext = null) => {
+  file = path.resolve(`src/templates/${file}`);
+
   let content;
 
   if (ext) {
     // include extension name in filename
     const fileParts = file.split('.');
     fileParts.splice(2, 0, ext);
-
-    // set extensions directory
-    const pathParts = fileParts[0].split('/');
-    fileParts[0] = `/../extensions/${pathParts[pathParts.length - 2]}/${
-      pathParts[pathParts.length - 1]
-    }`;
 
     const extFile = __dirname + fileParts.join('.');
 
