@@ -1,6 +1,6 @@
-export class {{entity}}Repository {
+export class {{domain}}Repository {
   constructor(db) {
-    this.collection = db.collection('{{pluralize (lowercase entity)}}');
+    this.collection = db.collection('{{pluralize (lowercase domain)}}');
   }
 
   findAll(take, skip) {

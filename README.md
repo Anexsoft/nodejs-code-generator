@@ -12,13 +12,15 @@ Create a configuration file
 node index.js init
 ```
 
-Go to the file created (config.json) and update `entities` property according your project. For example:
+Go to the file created (config.json) and update `domains` property according your project. For example:
 
 ```json
 {
-  "entities": ["User", "Password", "Product", "Category", "Merchant", "Store"]
+  "domains": ["User", "Password", "Product", "Category", "Merchant", "Store"]
 }
 ```
+
+**Note**: _any word added must be written in singular_
 
 ### Build your project
 

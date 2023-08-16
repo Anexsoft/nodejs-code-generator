@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 
-module.exports = async (host, name) => {
+export default async (host, name) => {
   const client = new MongoClient(host);
   await client.connect();
 

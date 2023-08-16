@@ -1,14 +1,16 @@
 const { lngExtensionFileResolver } = require('../../../common/extensions');
-const { templateLoader, templateWritter } = require('../../../common/template');
+const {
+  templateLoader,
+  templateWritter,
+  fileNameResolver,
+} = require('../../../common/template');
 
-module.exports = (entity, { lang }) => {
+module.exports = (domain, { lang, path, refs }) => {
   const langExt = lngExtensionFileResolver(lang);
   const tmpl = templateLoader(require.resolve(`./service.${langExt}.hbs`), {
-    entity,
+    domain,
+    refs,
   });
 
-  templateWritter(
-    `${entity.toLocaleLowerCase()}/services/${entity.toLocaleLowerCase()}.service.${langExt}`,
-    tmpl,
-  );
+  templateWritter(fileNameResolver(path, domain, langExt), tmpl);
 };

@@ -1,25 +1,28 @@
-export class {{entity}}Service {
-  constructor({{lowercase entity}}Repository) {
-    this.{{lowercase entity}}Repository = {{lowercase entity}}Repository;
+import { {{domain}} } from '{{refs.domain}}/{{lowercase domain}}.domain';
+import { {{domain}}Repository } from '{{refs.repository}}/{{lowercase domain}}.repository';
+
+export class {{domain}}Service {
+  constructor(private readonly {{lowercase domain}}Repository: {{domain}}Repository) {
+    this.{{lowercase domain}}Repository = {{lowercase domain}}Repository;
   }
 
-  findAll(take, skip) {
-    return this.{{lowercase entity}}Repository.findAll(take, skip);
+  findAll(take: number, skip: number): {{domain}}[] {
+    return this.{{lowercase domain}}Repository.findAll(take, skip);
   }
 
-  findbyId(id) {
-    return this.{{lowercase entity}}Repository.findbyId(id);
+  findbyId(id): {{domain}} {
+    return this.{{lowercase domain}}Repository.findbyId(id);
   }
 
   create(entry) {
-    return this.{{lowercase entity}}Repository.create(entry);
+    return this.{{lowercase domain}}Repository.create(entry);
   }
 
   update(id, entry) {
-    return this.{{lowercase entity}}Repository.update(id, entry);
+    return this.{{lowercase domain}}Repository.update(id, entry);
   }
 
   remove(id) {
-    return this.{{lowercase entity}}Repository.remove(id);
+    return this.{{lowercase domain}}Repository.remove(id);
   }
 }

@@ -8,4 +8,10 @@ module.exports = {
     mysql: 'mysql',
     mssql: 'mssql',
   },
+  MODULES: {
+    shared: 'shared',
+    service: 'service',
+    repository: 'repository',
+    domain: 'domain',
+  },
 };
