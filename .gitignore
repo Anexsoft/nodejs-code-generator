@@ -3,4 +3,5 @@ node_modules
 config.json
 
 # custom templates
-src/commands/build/**/*.*.*.hbs
+src/commands/build/**/extensions/*.js.*.hbs
+src/commands/build/**/extensions/*.ts.*.hbs
