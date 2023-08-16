@@ -15,15 +15,16 @@ const templateLoader = (file, args, ext = null) => {
     const fileParts = file.split('.');
     fileParts.splice(2, 0, ext);
 
-    // include extension directory for current path
+    // set extensions directory
     const pathParts = fileParts[0].split('/');
-    pathParts.splice(-1, 0, 'extensions');
-    fileParts[0] = pathParts.join('/');
+    fileParts[0] = `/../extensions/${pathParts[pathParts.length - 2]}/${
+      pathParts[pathParts.length - 1]
+    }`;
 
-    const tmplFile = fileParts.join('.');
+    const extFile = __dirname + fileParts.join('.');
 
-    if (fs.existsSync(tmplFile)) {
-      content = fs.readFileSync(tmplFile, 'utf8');
+    if (fs.existsSync(extFile)) {
+      content = fs.readFileSync(extFile, 'utf8');
     }
   }
 
