@@ -1,0 +1,25 @@
+export class {{domain}}Service {
+  constructor({{lowercase domain}}Repository) {
+    this.{{lowercase domain}}Repository = {{lowercase domain}}Repository;
+  }
+
+  findAll(take, skip) {
+    return this.{{lowercase domain}}Repository.findAll(take, skip);
+  }
+
+  findbyId(id) {
+    return this.{{lowercase domain}}Repository.findbyId(id);
+  }
+
+  create(entry) {
+    return this.{{lowercase domain}}Repository.create(entry);
+  }
+
+  update(id, entry) {
+    return this.{{lowercase domain}}Repository.update(id, entry);
+  }
+
+  remove(id) {
+    return this.{{lowercase domain}}Repository.remove(id);
+  }
+}

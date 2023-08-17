@@ -5,33 +5,33 @@ const {
   fileNameResolver,
 } = require('../../common/template');
 
-const moduleHandler = (module, domain, { lang, ext, path, refs }) => {
+const moduleHandler = (module, domain, { lang, db, tmpl, path, refs }) => {
   const langExt = lngExtensionFileResolver(lang);
 
-  const tmpl = templateLoader(
-    `${module}/${module}.${langExt}.hbs`,
+  const content = templateLoader(
+    `${module}/${db}/${module}.default.${langExt}.hbs`,
     {
       domain,
       refs,
     },
-    ext,
+    tmpl,
   );
 
-  templateWritter(fileNameResolver(path, domain, langExt), tmpl);
+  templateWritter(fileNameResolver(path, domain, langExt), content);
 };
 
-const dbModuleHandler = ({ lang, db, ext, path, refs }) => {
+const dbModuleHandler = ({ lang, db, tmpl, path, refs }) => {
   const langExt = lngExtensionFileResolver(lang);
 
-  const tmpl = templateLoader(
-    `database/${db}.${langExt}.hbs`,
+  const content = templateLoader(
+    `database/${db}.default.${langExt}.hbs`,
     {
       refs,
     },
-    ext,
+    tmpl,
   );
 
-  templateWritter(fileNameResolver(path, '', langExt), tmpl);
+  templateWritter(fileNameResolver(path, '', langExt), content);
 };
 
 module.exports = {

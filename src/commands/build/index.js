@@ -35,9 +35,9 @@ module.exports = {
       choices: [DATABASES.mongodb, DATABASES.mssql, DATABASES.mysql],
     });
 
-    yargs.option('ext', {
+    yargs.option('tmpl', {
       describe:
-        'Choose your extended template file. (Original template will be used if your extension does not exist)',
+        'Replace the default template by the parameter supplied. (Original template will be used if your extension does not exist)',
       default: null,
       type: 'string',
     });
@@ -46,25 +46,24 @@ module.exports = {
     try {
       const cfg = require('../../../config.json');
 
-      const { lang, db, ext } = argv;
+      const { lang, db, tmpl } = argv;
 
       // destroy previous builds
       execSync('npm run clean');
 
-      if (!ext) {
+      if (!tmpl) {
         console.info(
           `${colors.bold('Build')}: ` + colors.cyan(`${lang}/${db}`),
         );
       } else {
         console.info(
-          `${colors.bold('Build')}: ` + colors.cyan(`${lang}/${db} --${ext}`),
+          `${colors.bold('Build')}: ` + colors.cyan(`${lang}/${db} --${tmpl}`),
         );
       }
 
       _dbTemplateHandler({
         path: cfg.sharedModules.database.path,
-        db,
-        ext,
+        tmpl,
         ...argv,
       });
 

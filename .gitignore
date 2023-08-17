@@ -4,3 +4,4 @@ config.json
 
 # custom templates
 src/templates/**/*.*.*.hbs
+!src/templates/**/*.default.*.hbs

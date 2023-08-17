@@ -1,0 +1,40 @@
+import { MongoDbClient, Collection, ObjectId } from 'mongodb';
+
+import { {{domain}} } from '{{refs.domain}}/{{lowercase domain}}.domain';
+
+export class {{domain}}CreateInput { }
+
+export class {{domain}}UpdateInput { }
+
+export class {{domain}}Repository {
+  private readonly collection: Collection<{{domain}}>;
+
+  constructor(db: MongoDbClient) {
+    this.collection = db.collection<{{domain}}>('{{pluralize (lowercase domain)}}');
+  }
+
+  findAll(take: number, skip: number): {{domain}}[] {
+    return this.collection.find().take(take).skip(skip);
+  }
+
+  findbyId(id: ObjectId): {{domain}} {
+    return this.collection.findOne({ id });
+  }
+
+  create(entry: {{domain}}CreateInput) {
+    return this.collection.insert(entry);
+  }
+
+  update(id: ObjectId, entry: {{domain}}UpdateInput) {
+    return this.collection.update(
+      { id },
+      {
+        $set: entry,
+      },
+    );
+  }
+
+  remove(id: ObjectId) {
+    return this.collection.delete({ id });
+  }
+}

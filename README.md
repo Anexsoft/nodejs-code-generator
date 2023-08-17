@@ -1,6 +1,6 @@
 # NodeJS Code Generator
 
-A simple CLI tool to create base structures for new projects.
+A simple CLI tool for create base code structures for new projects. This tool follow First Code philosophy.
 
 ## How to start?
 
@@ -24,48 +24,55 @@ Go to the file created (config.json) and update `domains` property according you
 
 ### Build your project
 
-Execute the next command to build your new project.
+To create a template for javascript and mongodb project just run the next command:
 
 ```
 node index.js build --lang javascript --db mongodb
 ```
 
+The output of your project is on the **build directory**.
+
 For more information about the available commands and arguments, just run `node index.js`
 
 ### Extend your templates (optional)
 
-You can easily create and extend your templates. Go to the extensions path (`src/extensions`) and create a new template files.
+You can easily create and extend your templates. Go to the path (`src/templates`) and create a new template file.
 
 ```
-src/extensions/database/database.js.[extension_name].hbs
-src/extensions/service/service.js.[extension_name].hbs
-src/extensions/repository/repository.js.[extension_name].hbs
-src/extensions/domain/domain.js.[extension_name].hbs
+src/templates/database/database.js.[extension_name].hbs
+src/templates/service/[database]/service.js.[extension_name].hbs
+src/templates/repository/[database]/repository.js.[extension_name].hbs
+src/templates/domain/[database]/domain.js.[extension_name].hbs
 ```
 
 Eg: to create templates for NestJS
 
 ```
-src/extensions/service/service.js.nestjs.hbs
-src/extensions/repository/repository.js.nestjs.hbs
-src/extensions/domain/domain.js.nestjs.hbs
+src/templates/service/mongodb/service.js.nestjs.hbs
+src/templates/repository/mongodb/repository.js.nestjs.hbs
+src/templates/domain/mongodb/domain.js.nestjs.hbs
 ```
 
-Now, just run building command
+And for buid your project including your template files, just execute the next command.
 
 ```
-node index.js build --lang typescript --db mongodb --ext=nodejs
+node index.js build --lang typescript --db mongodb --tmpl=nestjs
 ```
 
-#### For your informnation
+#### For your information
 
 - You are availble to create multiple extensions, just remember to specify the name of your extensions before of `.hbs` and run the command including the name of your extension.
-- If a extension is not found, original template will be used.
+- If an extension is not found, original template will be used.
 
-## Usage
+### Available Templates
 
-- Languages supported: JavaScript
-- Database: MongoDB
+|           | TypeScript | JavaScript | CSharp | PHP | Python |
+| --------- | ---------- | ---------- | ------ | --- | ------ |
+| MongoDB   | X          | X          |        |     |        |
+| MySQL     | X          | X          |        |     |        |
+| MSSQL     |            |            |        |     |        |
+| Postgress |            |            |        |     |        |
+| DynamoDb  |            |            |        |     |        |
 
 # Credits
 

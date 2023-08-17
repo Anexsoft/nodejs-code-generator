@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 import { {{domain}} } from '{{refs.domain}}/{{lowercase domain}}.domain';
 import { {{domain}}Repository } from '{{refs.repository}}/{{lowercase domain}}.repository';
 
@@ -10,7 +12,7 @@ export class {{domain}}Service {
     return this.{{lowercase domain}}Repository.findAll(take, skip);
   }
 
-  findbyId(id): {{domain}} {
+  findbyId(id: ObjectId): {{domain}} {
     return this.{{lowercase domain}}Repository.findbyId(id);
   }
 

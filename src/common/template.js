@@ -8,20 +8,16 @@ const fileNameResolver = (path, name, extension) => {
   return path.replace('[name]', name.toLowerCase()).replace('[ext]', extension);
 };
 
-const templateLoader = (file, args, ext = null) => {
+const templateLoader = (file, args, tmpl = null) => {
   file = path.resolve(`src/templates/${file}`);
 
   let content;
 
-  if (ext) {
-    // include extension name in filename
-    const fileParts = file.split('.');
-    fileParts.splice(2, 0, ext);
+  if (tmpl) {
+    const customTemplateFile = file.replace('.default.', `.${tmpl}.`);
 
-    const extFile = __dirname + fileParts.join('.');
-
-    if (fs.existsSync(extFile)) {
-      content = fs.readFileSync(extFile, 'utf8');
+    if (fs.existsSync(customTemplateFile)) {
+      content = fs.readFileSync(customTemplateFile, 'utf8');
     }
   }
 

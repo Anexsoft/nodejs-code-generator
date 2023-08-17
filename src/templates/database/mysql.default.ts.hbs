@@ -1,0 +1,11 @@
+import { createConnection } from 'mysql';
+
+export default async (
+  host,
+  user,
+  password,
+  database,
+) => {
+  const connection = createConnection({ host, user, password, database });
+  return connection.connect();
+};
